@@ -24,18 +24,24 @@ pipeline {
       }
     }
 
-    stage('Deploy') {
-      steps {
-        sh """
-          if [ -f target/myapp.war ]; then
-            sudo cp target/myapp.war ${TOMCAT_WEBAPPS}/
-            echo 'Deployed myapp.war to tomcat webapps'
-          else
-            echo 'WAR not found!'
-            exit 1
-          fi
-        """
-      }
+    // stage('Deploy') {
+    //   steps {
+    //     sh """
+    //       if [ -f target/myapp.war ]; then
+    //         sudo cp target/myapp.war ${TOMCAT_WEBAPPS}/
+    //         echo 'Deployed myapp.war to tomcat webapps'
+    //       else
+    //         echo 'WAR not found!'
+    //         exit 1
+    //       fi
+    //     """
+    //   }
+    // }
+
+    stage('Deploy to Tomcat') {
+        steps {
+            sh 'cp target/*.war /opt/apache-tomcat-9.0.85/webapps/'
+        }
     }
   }
 
